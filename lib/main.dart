@@ -5,38 +5,42 @@ extension Log on Object {
   void log() => devtools.log(toString());
 }
 
-enum Type { cat, dog }
-
-abstract class CanRun {
-  final Type type;
-
-  const CanRun({required this.type});
-
-  @mustCallSuper
+mixin class CanRun {
   void run() {
-    "CanRun's run functions is called".log();
+    "Running...".log();
   }
 }
 
-class Cat extends CanRun {
-  const Cat() : super(type: Type.cat);
+mixin class CanWalk {
+  void walk() {
+    "Walking...".log();
+  }
+}
 
+class Cat with CanRun, CanWalk{
+}
+
+/*
+If you use the keyword "implements", you must override the super class methods.
+
+class Cat implements CanRun, CanWalk{
   @override
   void run() {
-    super.run();
-    'Cat running'.log();
+    // TODO: implement run
   }
-}
 
-class Dog extends CanRun {
-  const Dog() : super(type: Type.dog);
+  @override
+  void walk() {
+    // TODO: implement walk
+  }
+
 }
+ */
+
 
 void testIt() {
-  const cat = Cat();
-  cat.type.log();
-  const dog = Dog();
-  dog.type.log();
+  final cat = Cat();
+  cat..run()..walk();
 }
 
 void main() {
@@ -83,10 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme
-            .of(context)
-            .colorScheme
-            .inversePrimary,
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
       body: Center(
@@ -98,10 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               '$_counter',
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .headlineMedium,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
         ),
