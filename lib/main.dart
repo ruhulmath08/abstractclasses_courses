@@ -5,14 +5,12 @@ extension Log on Object {
   void log() => devtools.log(toString());
 }
 
+enum Type { cat, dog }
+
 abstract class CanRun {
-  String get type {
-    if (this is Cat) {
-      return 'Cat';
-    }else {
-      return 'Something else';
-    }
-  }
+  final Type type;
+
+  const CanRun({required this.type});
 
   @mustCallSuper
   void run() {
@@ -21,6 +19,8 @@ abstract class CanRun {
 }
 
 class Cat extends CanRun {
+  const Cat() : super(type: Type.cat);
+
   @override
   void run() {
     super.run();
@@ -28,12 +28,14 @@ class Cat extends CanRun {
   }
 }
 
-class Dog extends CanRun {}
+class Dog extends CanRun {
+  const Dog() : super(type: Type.dog);
+}
 
 void testIt() {
-  final cat = Cat();
+  const cat = Cat();
   cat.type.log();
-  final dog = Dog();
+  const dog = Dog();
   dog.type.log();
 }
 
@@ -81,7 +83,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Theme
+            .of(context)
+            .colorScheme
+            .inversePrimary,
         title: Text(widget.title),
       ),
       body: Center(
@@ -93,7 +98,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .headlineMedium,
             ),
           ],
         ),
